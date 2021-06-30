@@ -17,13 +17,17 @@ class TM1638
   unsigned char   pre_key = 0;
   unsigned char   key_buf = 0;
   unsigned char   key_cnt = 0;
+  uint32_t scroll_pos = 0;
 
   unsigned char key_scan();
   unsigned char tm1638_rd_data();
   void tm1638_wr_data(unsigned char data);
   void  tm1638_wr_str_16();
+
 public:
   TM1638(uint8_t stb, uint8_t clk, uint8_t dio);
+  void setup();
   unsigned char getKey();
   void display(const uint8_t (&number)[8], uint8_t dots = 0, uint8_t leds = 0);
+  void display(const char* chars);
 };

@@ -42,6 +42,9 @@ constexpr unsigned char ASC2SEG_TBL[256] = {
 
 TM1638::TM1638(uint8_t stb, uint8_t clk, uint8_t dio) :
   stb(stb), clk(clk), dio(dio) {
+}
+
+void TM1638::setup() {
   pinMode(stb, OUTPUT);
   pinMode(clk, OUTPUT);
   pinMode(dio, OUTPUT);
@@ -63,6 +66,25 @@ void TM1638::display(const uint8_t (&number)[8], uint8_t dots, uint8_t leds) {
     disp_buf[i*2] = ASC2SEG_TBL[number[i] + 0x30];
     disp_buf[i*2] += dots & (0x80 >> i) ? 0x80 : 0;
     disp_buf[i*2+1] = leds & (0x80 >> i) ? 1 : 0;
+  }
+  tm1638_wr_str_16();
+}
+
+void TM1638::display(const char* chars) {
+  uint32_t j = 0;
+  uint32_t i = 0;
+  for (i=0; i < strlen(chars); i++) {
+    unsigned char ch = chars[i];
+    if (i != 0) {
+      if (ch == '.') {
+        disp_buf[(j-1)*2] += 0x80;
+        continue;
+      }
+    }
+    disp_buf[j*2] = ASC2SEG_TBL[ch];
+    if (++j > 8) {
+      break;
+    }
   }
   tm1638_wr_str_16();
 }
