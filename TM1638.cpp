@@ -88,10 +88,29 @@ void TM1638::display(const char* chars) {
   }
   tm1638_wr_str_16();
 }
+void TM1638::display(uint32_t number) {
+  uint8_t n[8] = {0};
+  n[7] = number % 10;
+  n[6] = number / 10 % 10;
+  n[5] = number / 100 % 10;
+  n[4] = number / 1000 % 10;
+  n[3] = number / 10000 % 10;
+  n[2] = number / 100000 % 10;
+  n[1] = number / 1000000 % 10;
+  n[0] = number / 10000000 % 10;
+  display(n);
+}
 
 void TM1638::led(const uint8_t leds) {
   for (int i=0; i<8; i++) {
     disp_buf[i*2+1] = leds & (0x80 >> i) ? 1 : 0;
+  }
+  tm1638_wr_str_16();
+}
+
+void TM1638::dot(const uint8_t dots) {
+  for (int i=0; i<8; i++) {
+    disp_buf[i*2] += dots & (0x80 >> i) ? 0x80 : 0;
   }
   tm1638_wr_str_16();
 }

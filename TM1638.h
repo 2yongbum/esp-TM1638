@@ -30,5 +30,7 @@ public:
   unsigned char getKey();
   void display(const uint8_t (&number)[8], uint8_t dots = 0, uint8_t leds = 0);
   void display(const char* chars);
+  void display(uint32_t number);
   void led(const uint8_t leds);
+  void dot(const uint8_t dots);
 };
