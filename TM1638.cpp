@@ -89,6 +89,13 @@ void TM1638::display(const char* chars) {
   tm1638_wr_str_16();
 }
 
+void TM1638::led(const uint8_t leds) {
+  for (int i=0; i<8; i++) {
+    disp_buf[i*2+1] = leds & (0x80 >> i) ? 1 : 0;
+  }
+  tm1638_wr_str_16();
+}
+
 // scan keys on display board
 // this function will be called at every 10 msec
 // key debouncing time = 80 msec
