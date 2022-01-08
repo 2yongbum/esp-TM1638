@@ -108,6 +108,14 @@ void TM1638::led(const uint8_t leds) {
   tm1638_wr_str_16();
 }
 
+void TM1638::led_fill_r(uint8_t num) {
+  uint8_t leds = 0;
+  for (int i = 0; i < num && 8; i++) {
+    leds += 1<<i;
+  }
+  led(leds);
+}
+
 void TM1638::dot(const uint8_t dots) {
   for (int i=0; i<8; i++) {
     disp_buf[i*2] += dots & (0x80 >> i) ? 0x80 : 0;

@@ -6,6 +6,24 @@
 	#include "WProgram.h"
 #endif
 
+#define LED1 0x80
+#define LED2 0x40
+#define LED3 0x20
+#define LED4 0x10
+#define LED5 0x08
+#define LED6 0x04
+#define LED7 0x02
+#define LED8 0x01
+
+#define S1 0x01
+#define S2 0x02
+#define S3 0x04
+#define S4 0x08
+#define S5 0x10
+#define S6 0x20
+#define S7 0x40
+#define S8 0x80
+
 class TM1638
 {
   uint8_t stb;
@@ -33,4 +51,5 @@ public:
   void display(uint32_t number);
   void led(const uint8_t leds);
   void dot(const uint8_t dots);
+  void led_fill_r(uint8_t num);
 };
